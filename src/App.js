@@ -27,7 +27,7 @@ class App extends Component {
   };
 
   deleteItem = id => {
-    axios.delete(`https://jsonplaceholder.typicode.com/todos/${id}`).then(res =>
+    axios.delete(`http://localhost:8000/api/${id}`).then(res =>
       this.setState({
         grocerylist: [...this.state.grocerylist.filter(item => item.id !== id)]
       })
@@ -36,7 +36,7 @@ class App extends Component {
 
   addGrocery = groceryItem => {
     axios
-      .post("https://jsonplaceholder.typicode.com/todos", {
+      .post("http://localhost:8000/api/", {
         item: groceryItem,
         completed: false
       })
