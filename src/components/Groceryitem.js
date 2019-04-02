@@ -14,6 +14,7 @@ export class Groceryitem extends Component {
       <div style={this.addStyle()}>
         <p>
           {this.props.grocery.item}
+          <span style={qtStyle}>{this.props.grocery.quantity}</span>
           <input
             type="checkbox"
             onChange={this.props.toggleComplete.bind(
@@ -21,6 +22,7 @@ export class Groceryitem extends Component {
               this.props.grocery.id
             )}
           />
+
           <button
             style={deleteStyle}
             onClick={this.props.deleteItem.bind(this, this.props.grocery.id)}
@@ -44,4 +46,9 @@ const deleteStyle = {
   padding: "2px 4px"
 };
 
+const qtStyle = {
+  color: "black",
+  padding: "2px 10px",
+  borderStyle: "solid"
+};
 export default Groceryitem;

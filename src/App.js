@@ -34,10 +34,11 @@ class App extends Component {
     );
   };
 
-  addGrocery = groceryItem => {
+  addGrocery = (groceryItem, quantity) => {
     axios
       .post("http://localhost:8000/api/", {
         item: groceryItem,
+        quantity: quantity,
         completed: false
       })
       .then(res =>

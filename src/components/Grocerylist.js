@@ -9,6 +9,7 @@ class Grocerylist extends Component {
         grocery={grocery}
         toggleComplete={this.props.toggleComplete}
         deleteItem={this.props.deleteItem}
+        key={grocery.id}
       />
     ));
   }

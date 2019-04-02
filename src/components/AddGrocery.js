@@ -2,7 +2,8 @@ import React, { Component } from "react";
 
 export class AddGrocery extends Component {
   state = {
-    groceryItem: ""
+    groceryItem: "",
+    quantity: ""
   };
 
   onChange = event => {
@@ -11,8 +12,8 @@ export class AddGrocery extends Component {
 
   onSubmit = event => {
     event.preventDefault();
-    this.props.addGrocery(this.state.groceryItem);
-    this.setState({ groceryItem: "" });
+    this.props.addGrocery(this.state.groceryItem, this.state.quantity);
+    this.setState({ groceryItem: "", quantity: "" });
   };
 
   render() {
@@ -22,8 +23,16 @@ export class AddGrocery extends Component {
           type="text"
           name="groceryItem"
           placeholder="add grocery item"
-          style={{ flex: "10" }}
+          style={{ flex: "5" }}
           value={this.state.groceryItem}
+          onChange={this.onChange}
+        />
+        <input
+          type="text"
+          name="quantity"
+          placeholder="add quantity"
+          style={{ flex: "5" }}
+          value={this.state.quantity}
           onChange={this.onChange}
         />
         <input type="submit" value="Submit" style={{ flex: "1" }} />
