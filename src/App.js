@@ -46,6 +46,10 @@ class App extends Component {
       );
   };
 
+  editGrocery = id => {
+    console.log(id);
+  };
+
   render() {
     return (
       <div className="App">
