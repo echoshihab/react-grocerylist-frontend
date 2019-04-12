@@ -3,7 +3,9 @@ import PropTypes from "prop-types";
 
 export class Groceryitem extends Component {
   state = {
-    editGroceryItem: false
+    editGroceryItem: false,
+    groceryItem: "",
+    quantity: ""
   };
   addStyle = () => {
     return {
@@ -15,8 +17,25 @@ export class Groceryitem extends Component {
 
   editGrocery = () => {
     this.setState({
+      editGroceryItem: !this.state.editGroceryItem,
+      groceryItem: this.props.grocery.item,
+      quantity: this.props.grocery.quantity
+    });
+  };
+
+  saveGrocery = () => {
+    this.props.updateItem(
+      this.props.grocery.id,
+      this.state.groceryItem,
+      this.state.quantity
+    );
+    this.setState({
       editGroceryItem: !this.state.editGroceryItem
     });
+  };
+
+  onChange = event => {
+    this.setState({ [event.target.name]: event.target.value });
   };
 
   render() {
@@ -40,7 +59,7 @@ export class Groceryitem extends Component {
           Delete
         </button>
 
-        <button style={editStyle} onClick={this.editGrocery}>
+        <button id="edit" style={editStyle} onClick={this.editGrocery}>
           Edit
         </button>
       </div>
@@ -48,14 +67,18 @@ export class Groceryitem extends Component {
       <div style={this.addStyle()}>
         <input
           type="text"
+          name="groceryItem"
           defaultValue={this.props.grocery.item}
           style={qtStyle}
+          onChange={this.onChange}
         />
 
         <input
           type="text"
+          name="quantity"
           defaultValue={this.props.grocery.quantity}
           style={qtStyle}
+          onChange={this.onChange}
         />
 
         <input
@@ -70,7 +93,7 @@ export class Groceryitem extends Component {
           Delete
         </button>
 
-        <button style={saveStyle} onClick={this.editGrocery}>
+        <button style={saveStyle} onClick={this.saveGrocery}>
           Save
         </button>
       </div>

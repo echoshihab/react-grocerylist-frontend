@@ -15,6 +15,7 @@ class App extends Component {
       .get("http://localhost:8000/api/")
       .then(res => this.setState({ grocerylist: res.data }));
   }
+
   toggleComplete = id => {
     this.setState({
       grocerylist: this.state.grocerylist.filter(item => {
@@ -46,8 +47,20 @@ class App extends Component {
       );
   };
 
-  editGrocery = id => {
-    console.log(id);
+  updateItem = (id, item, quantity) => {
+    axios
+      .put(`http://localhost:8000/api/${id}/`, {
+        item,
+        quantity
+      })
+      .then(res => {
+        let copyList = [...this.state.grocerylist];
+        let itemIndex = copyList.findIndex(item => item.id === id);
+        copyList[itemIndex] = res.data;
+        this.setState({
+          grocerylist: copyList
+        });
+      });
   };
 
   render() {
@@ -59,6 +72,7 @@ class App extends Component {
           grocerylist={this.state.grocerylist}
           toggleComplete={this.toggleComplete}
           deleteItem={this.deleteItem}
+          updateItem={this.updateItem}
         />
       </div>
     );
