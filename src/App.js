@@ -1,7 +1,13 @@
-import React, { Component } from "react";
+import React, { Component, Fragment } from "react";
+import ReactDOM from "react-dom";
+import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+import store from "./store";
 import "./App.css";
+import { Provider } from "react-redux";
+import Login from "./User/Login";
+import Register from "./User/Register";
 import Grocerylist from "./components/Grocerylist";
-import Title from "./components/Title";
+import Mainbar from "./components/layout/Mainbar";
 import AddGrocery from "./components/AddGrocery";
 import axios from "axios";
 
@@ -65,18 +71,36 @@ class App extends Component {
 
   render() {
     return (
-      <div className="App">
-        <Title />
-        <AddGrocery addGrocery={this.addGrocery} />
-        <Grocerylist
-          grocerylist={this.state.grocerylist}
-          toggleComplete={this.toggleComplete}
-          deleteItem={this.deleteItem}
-          updateItem={this.updateItem}
-        />
-      </div>
+      <Provider store={store}>
+        <Router>
+          <Fragment>
+            <Mainbar />
+            <div className="container">
+              <Switch>
+                <Route exact path="/" component={Login} />
+                <Route
+                  exact
+                  path="/grocery-list"
+                  render={props => (
+                    <React.Fragment>
+                      <AddGrocery addGrocery={this.addGrocery} />
+                      <Grocerylist
+                        grocerylist={this.state.grocerylist}
+                        toggleComplete={this.toggleComplete}
+                        deleteItem={this.deleteItem}
+                        updateItem={this.updateItem}
+                      />
+                    </React.Fragment>
+                  )}
+                />
+                <Route exact path="/register" component={Register} />
+              </Switch>
+            </div>
+          </Fragment>
+        </Router>
+      </Provider>
     );
   }
 }
 
-export default App;
+ReactDOM.render(<App />, document.getElementById("app"));
