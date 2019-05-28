@@ -1,8 +1,17 @@
 import React, { Component } from "react";
+import { connect } from "react-redux";
 import Groceryitem from "./Groceryitem";
-import PropTypes from "prop-types";
+import {
+  getList,
+  deleteItem,
+  updateItem,
+  toggleComplete
+} from "../actions/grocery";
 
 class Grocerylist extends Component {
+  componentDidMount() {
+    this.props.getList();
+  }
   render() {
     return this.props.grocerylist.map(grocery => (
       <Groceryitem
@@ -16,9 +25,11 @@ class Grocerylist extends Component {
   }
 }
 
-//prop-types
-Grocerylist.propTypes = {
-  grocerylist: PropTypes.array.isRequired
-};
+const mapStateToProps = state => ({
+  grocerylist: state.grocery.grocerylist
+});
 
-export default Grocerylist;
+export default connect(
+  mapStateToProps,
+  { getList, deleteItem, updateItem, toggleComplete }
+)(Grocerylist);

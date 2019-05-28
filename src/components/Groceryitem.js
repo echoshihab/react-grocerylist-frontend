@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import PropTypes from "prop-types";
 
 export class Groceryitem extends Component {
   state = {
@@ -7,6 +6,7 @@ export class Groceryitem extends Component {
     groceryItem: "",
     quantity: ""
   };
+
   addStyle = () => {
     return {
       border: "solid 1px",
@@ -41,27 +41,40 @@ export class Groceryitem extends Component {
   render() {
     return !this.state.editGroceryItem ? (
       <div style={this.addStyle()}>
-        <span style={qtStyle}>{this.props.grocery.item}</span>
-        <span style={qtStyle}>{this.props.grocery.quantity}</span>
+        <span>{this.props.grocery.item}</span>
+        <span style={padLeftStyle}>{this.props.grocery.quantity}</span>
+        <span style={padLeftStyle}>
+          <button
+            name="check"
+            className="btn btn-success btn-sm"
+            onChange={this.props.toggleComplete.bind(
+              this,
+              this.props.grocery.id
+            )}
+          >
+            Check
+          </button>
 
-        <input
-          type="checkbox"
-          onChange={this.props.toggleComplete.bind(this, this.props.grocery.id)}
-        />
+          <button
+            type="button"
+            className="btn btn-danger btn-sm"
+            onDoubleClick={this.props.deleteItem.bind(
+              this,
+              this.props.grocery.id
+            )}
+          >
+            Delete
+          </button>
 
-        <button
-          style={deleteStyle}
-          onDoubleClick={this.props.deleteItem.bind(
-            this,
-            this.props.grocery.id
-          )}
-        >
-          Delete
-        </button>
-
-        <button id="edit" style={editStyle} onClick={this.editGrocery}>
-          Edit
-        </button>
+          <button
+            id="edit"
+            type="button"
+            className="btn btn-dark btn-sm"
+            onClick={this.editGrocery}
+          >
+            Edit
+          </button>
+        </span>
       </div>
     ) : (
       <div style={this.addStyle()}>
@@ -69,7 +82,6 @@ export class Groceryitem extends Component {
           type="text"
           name="groceryItem"
           defaultValue={this.props.grocery.item}
-          style={qtStyle}
           onChange={this.onChange}
         />
 
@@ -77,57 +89,43 @@ export class Groceryitem extends Component {
           type="text"
           name="quantity"
           defaultValue={this.props.grocery.quantity}
-          style={qtStyle}
           onChange={this.onChange}
         />
+        <span style={padLeftStyle}>
+          <button
+            name="check"
+            className="btn btn-light btn-sm"
+            onChange={this.props.toggleComplete.bind(
+              this,
+              this.props.grocery.id
+            )}
+          >
+            Uncheck
+          </button>
 
-        <input
-          type="checkbox"
-          onChange={this.props.toggleComplete.bind(this, this.props.grocery.id)}
-        />
+          <button
+            type="button"
+            className="btn btn-danger btn-sm"
+            onClick={this.props.deleteItem.bind(this, this.props.grocery.id)}
+          >
+            Delete
+          </button>
 
-        <button
-          style={deleteStyle}
-          onClick={this.props.deleteItem.bind(this, this.props.grocery.id)}
-        >
-          Delete
-        </button>
-
-        <button style={saveStyle} onClick={this.saveGrocery}>
-          Save
-        </button>
+          <button
+            type="button"
+            className="btn btn-secondary btn-sm"
+            onClick={this.saveGrocery}
+          >
+            Save
+          </button>
+        </span>
       </div>
     );
   }
 }
 
-//prop-types
-Groceryitem.propTypes = {
-  grocery: PropTypes.object.isRequired
-};
-
-const deleteStyle = {
-  background: "red",
-  color: "white",
-  padding: "2px 4px"
-};
-
-const editStyle = {
-  background: "blue",
-  color: "white",
-  padding: "2px 4px"
-};
-
-const saveStyle = {
-  background: "green",
-  color: "white",
-  padding: "2px 4px"
-};
-
-const qtStyle = {
-  color: "black",
-  padding: "2px 10px",
-  borderStyle: "solid"
+const padLeftStyle = {
+  paddingLeft: "10px"
 };
 
 export default Groceryitem;

@@ -10,8 +10,7 @@ const initialState = {
   access: localStorage.getItem("access"),
   refresh: localStorage.getItem("refresh"),
   isAuthenticated: null,
-  isLoading: false,
-  user: null
+  isLoading: false
 };
 
 export default function(state = initialState, action) {
@@ -33,7 +32,8 @@ export default function(state = initialState, action) {
       localStorage.removeItem("refresh");
       return {
         ...state,
-        token: null,
+        acesss: null,
+        refresh: null,
         user: null,
         isAuthenticated: false,
         isLoading: false

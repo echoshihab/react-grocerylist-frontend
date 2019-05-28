@@ -1,4 +1,6 @@
 import React, { Component } from "react";
+import { connect } from "react-redux";
+import { addItem } from "../actions/grocery";
 
 export class AddGrocery extends Component {
   state = {
@@ -12,7 +14,7 @@ export class AddGrocery extends Component {
 
   onSubmit = event => {
     event.preventDefault();
-    this.props.addGrocery(this.state.groceryItem, this.state.quantity);
+    this.props.addItem(this.state.groceryItem, this.state.quantity);
     this.setState({ groceryItem: "", quantity: "" });
   };
 
@@ -41,4 +43,7 @@ export class AddGrocery extends Component {
   }
 }
 
-export default AddGrocery;
+export default connect(
+  null,
+  { addItem }
+)(AddGrocery);

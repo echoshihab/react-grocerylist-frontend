@@ -74,8 +74,9 @@ export const logout = () => dispatch => {
 
 //SETUP CONFIG WITH TOKEN - HELPER FUNCTION
 export const tokenConfig = getState => {
-  //get access koken from state
+  //get access token from state
   const access = getState().auth.access;
+  //const refresh = getState().auth.refresh;
 
   //Headers
   const config = {
@@ -85,7 +86,7 @@ export const tokenConfig = getState => {
   };
 
   if (access) {
-    config.headers["Authorization"] = access;
+    config.headers["Authorization"] = `Bearer ${access}`;
   }
   return config;
 };

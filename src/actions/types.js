@@ -5,3 +5,7 @@ export const REGISTER_FAIL = "REGISTER_FAIL";
 export const LOGOUT_SUCCESS = "LOGOUT_SUCCESS";
 export const GET_ERRORS = "GET_ERRORS";
 export const CREATE_MESSAGE = "CREATE_MESSAGE";
+export const GET_LIST = "GET_LIST";
+export const ADD_ITEM = "ADD_ITEM";
+export const DELETE_ITEM = "DELETE_ITEM";
+export const UPDATE_ITEM = "UPDATE_ITEM";
