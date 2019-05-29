@@ -2,7 +2,8 @@ import {
   GET_LIST,
   DELETE_ITEM,
   ADD_ITEM,
-  UPDATE_ITEM
+  UPDATE_ITEM,
+  TOGGLE_ITEM
 } from "../actions/types.js";
 
 const initialState = {
@@ -19,7 +20,7 @@ export default function(state = initialState, action) {
     case DELETE_ITEM:
       return {
         ...state,
-        grocerylist: state.leads.filter(
+        grocerylist: state.grocerylist.filter(
           grocery => grocery.id !== action.payload
         )
       };
@@ -31,7 +32,27 @@ export default function(state = initialState, action) {
     case UPDATE_ITEM:
       return {
         ...state,
-        grocerylist: action.payload
+        grocerylist: state.grocerylist.map(grocery =>
+          grocery.id === action.payload.id
+            ? {
+                ...grocery,
+                item: action.payload.item,
+                quantity: action.payload.quantity
+              }
+            : grocery
+        )
+      };
+    case TOGGLE_ITEM:
+      return {
+        ...state,
+        grocerylist: state.grocerylist.map(grocery =>
+          grocery.id === action.payload.id
+            ? {
+                ...grocery,
+                completed: action.payload.completed
+              }
+            : grocery
+        )
       };
     default:
       return state;

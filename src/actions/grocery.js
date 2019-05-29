@@ -2,7 +2,13 @@ import axios from "axios";
 import { returnErrors } from "./messages";
 import { tokenConfig } from "./auth";
 
-import { GET_LIST, ADD_ITEM, DELETE_ITEM, UPDATE_ITEM } from "./types";
+import {
+  GET_LIST,
+  ADD_ITEM,
+  DELETE_ITEM,
+  UPDATE_ITEM,
+  TOGGLE_ITEM
+} from "./types";
 
 //GET LIST
 export const getList = () => (dispatch, getState) => {
@@ -42,6 +48,7 @@ export const updateItem = (id, item, quantity) => (dispatch, getState) => {
       tokenConfig(getState)
     )
     .then(res => {
+      console.log(res);
       dispatch({
         type: UPDATE_ITEM,
         payload: res.data
@@ -75,13 +82,13 @@ export const toggleComplete = (id, completed) => (dispatch, getState) => {
     .put(
       `http://localhost:8000/api/${id}/`,
       {
-        completed
+        completed: true
       },
       tokenConfig(getState)
     )
     .then(res => {
       dispatch({
-        type: UPDATE_ITEM,
+        type: TOGGLE_ITEM,
         payload: res.data
       });
     })

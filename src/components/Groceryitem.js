@@ -3,6 +3,7 @@ import React, { Component } from "react";
 export class Groceryitem extends Component {
   state = {
     editGroceryItem: false,
+    completed: false,
     groceryItem: "",
     quantity: ""
   };
@@ -21,6 +22,13 @@ export class Groceryitem extends Component {
       groceryItem: this.props.grocery.item,
       quantity: this.props.grocery.quantity
     });
+  };
+
+  markCompleted = () => {
+    this.setState({
+      completed: !this.state.completed
+    });
+    this.props.toggleComplete(this.props.grocery.id, this.state.completed);
   };
 
   saveGrocery = () => {
@@ -47,10 +55,7 @@ export class Groceryitem extends Component {
           <button
             name="check"
             className="btn btn-success btn-sm"
-            onChange={this.props.toggleComplete.bind(
-              this,
-              this.props.grocery.id
-            )}
+            onClick={this.markCompleted}
           >
             Check
           </button>
@@ -58,10 +63,7 @@ export class Groceryitem extends Component {
           <button
             type="button"
             className="btn btn-danger btn-sm"
-            onDoubleClick={this.props.deleteItem.bind(
-              this,
-              this.props.grocery.id
-            )}
+            onClick={this.props.deleteItem.bind(this, this.props.grocery.id)}
           >
             Delete
           </button>
@@ -94,15 +96,11 @@ export class Groceryitem extends Component {
         <span style={padLeftStyle}>
           <button
             name="check"
-            className="btn btn-light btn-sm"
-            onChange={this.props.toggleComplete.bind(
-              this,
-              this.props.grocery.id
-            )}
+            className="btn btn-success btn-sm"
+            onClick={this.markCompleted}
           >
-            Uncheck
+            Check
           </button>
-
           <button
             type="button"
             className="btn btn-danger btn-sm"
