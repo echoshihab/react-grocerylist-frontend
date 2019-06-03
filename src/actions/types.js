@@ -11,3 +11,6 @@ export const DELETE_ITEM = "DELETE_ITEM";
 export const UPDATE_ITEM = "UPDATE_ITEM";
 export const TOGGLE_ITEM = "TOGGLE_ITEM";
 export const RENEW_SUCCESS = "RENEW_SUCCESS";
+export const LOAD_USER = "LOAD_USER";
+export const LOADED_USER = "LOADED_USER";
+export const LOAD_ERROR = "LOAD_ERROR";

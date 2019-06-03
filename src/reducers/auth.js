@@ -4,7 +4,10 @@ import {
   REGISTER_SUCCESS,
   REGISTER_FAIL,
   LOGOUT_SUCCESS,
-  RENEW_SUCCESS
+  RENEW_SUCCESS,
+  LOAD_USER,
+  LOADED_USER,
+  LOAD_ERROR
 } from "../actions/types";
 
 const initialState = {
@@ -18,6 +21,18 @@ const expirationTime = new Date(new Date().getTime() + 280 * 1000);
 
 export default function(state = initialState, action) {
   switch (action.type) {
+    case LOAD_USER:
+      return {
+        ...state,
+        isLoading: true
+      };
+    case LOADED_USER:
+      return {
+        ...state,
+        isAuthenticated: true,
+        isLoading: false,
+        user: action.payload
+      };
     case LOGIN_SUCCESS:
     case REGISTER_SUCCESS:
       localStorage.setItem("access", action.payload.access);
@@ -39,6 +54,7 @@ export default function(state = initialState, action) {
     case LOGIN_FAIL:
     case LOGOUT_SUCCESS:
     case REGISTER_FAIL:
+    case LOAD_ERROR:
       localStorage.removeItem("access");
       localStorage.removeItem("refresh");
       return {

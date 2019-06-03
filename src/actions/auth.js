@@ -6,8 +6,30 @@ import {
   REGISTER_SUCCESS,
   REGISTER_FAIL,
   LOGOUT_SUCCESS,
-  RENEW_SUCCESS
+  RENEW_SUCCESS,
+  LOAD_USER,
+  LOADED_USER,
+  LOAD_ERROR
 } from "./types";
+
+export const loadUser = () => (dispatch, getState) => {
+  dispatch({ type: LOAD_USER });
+
+  axios
+    .get("http://localhost:8000/api/accounts/user/", tokenConfig(getState))
+    .then(res => {
+      dispatch({
+        type: LOADED_USER,
+        payload: res.data
+      });
+    })
+    .catch(err => {
+      dispatch(returnErrors(err.response.data, err.response.status));
+      dispatch({
+        type: LOAD_ERROR
+      });
+    });
+};
 
 // submit refresh tokena to get new access token
 export const renewAccess = () => (dispatch, getState) => {

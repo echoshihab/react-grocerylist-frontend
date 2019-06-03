@@ -8,52 +8,13 @@ import GroceryApp from "./components/GroceryApp";
 import Mainbar from "./components/layout/Mainbar";
 import UserRoute from "./User/UserRoute";
 import store from "./store";
+import { loadUser } from "./actions/auth";
 import "./App.css";
 
-//import axios from "axios";
-
 class App extends Component {
-  /*
-  toggleComplete = id => {
-    this.setState({
-      grocerylist: this.state.grocerylist.filter(item => {
-        if (item.id === id) {
-          item.completed = !item.completed;
-        }
-        return item;
-      })
-    });
-  };
-
-
-  addGrocery = (groceryItem, quantity) => {
-    axios
-      .post("http://localhost:8000/api/", {
-        item: groceryItem,
-        quantity: quantity,
-        completed: false
-      })
-      .then(res =>
-        this.setState({ grocerylist: [...this.state.grocerylist, res.data] })
-      );
-  };
-
-updateItem = (id, item, quantity) => {
-  axios
-    .put(`http://localhost:8000/api/${id}/`, {
-      item,
-      quantity
-    })
-    .then(res => {
-      let copyList = [...this.state.grocerylist];
-      let itemIndex = copyList.findIndex(item => item.id === id);
-      copyList[itemIndex] = res.data;
-      this.setState({
-        grocerylist: copyList
-      });
-    });
-};
-*/
+  componentDidMount() {
+    store.dispatch(loadUser());
+  }
   render() {
     return (
       <Provider store={store}>
