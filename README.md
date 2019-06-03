@@ -1,6 +1,6 @@
 Grocerylist Application React Frontend:<br>
-Completed: ability to get list, add & delete items by connecting to django backend api <br>
-(see repo: django-grocerylist-backend)
+
+(see repo: django-grocerylist-backend for backend)
 
 ## Available Scripts
 

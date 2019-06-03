@@ -5,8 +5,44 @@ import {
   LOGIN_FAIL,
   REGISTER_SUCCESS,
   REGISTER_FAIL,
-  LOGOUT_SUCCESS
+  LOGOUT_SUCCESS,
+  RENEW_SUCCESS
 } from "./types";
+
+// submit refresh tokena to get new access token
+export const renewAccess = () => (dispatch, getState) => {
+  const config = {
+    headers: {
+      "Content-Type": "application/json"
+    }
+  };
+  const refresh = getState().auth.refresh;
+  axios
+    .post("http://localhost:8000/api/token/refresh/", { refresh }, config)
+    .then(res => {
+      console.log(res);
+      dispatch({
+        type: RENEW_SUCCESS,
+        payload: res.data
+      });
+    })
+    .catch(err => {
+      dispatch(returnErrors(err.response.data, err.response.status));
+      dispatch({
+        type: LOGIN_FAIL
+      });
+    });
+};
+
+//check timeout for access token and dispatching renewal of access token
+export const checkAccessTimeout = expirationTime => {
+  return dispatch => {
+    setTimeout(() => {
+      dispatch(renewAccess());
+      console.log("dispatching renew access");
+    }, expirationTime * 1000);
+  };
+};
 
 //Login User
 export const login = (username, password) => dispatch => {
@@ -26,6 +62,7 @@ export const login = (username, password) => dispatch => {
         type: LOGIN_SUCCESS,
         payload: res.data
       });
+      dispatch(checkAccessTimeout(280));
     })
     .catch(err => {
       dispatch(returnErrors(err.response.data, err.response.status));
