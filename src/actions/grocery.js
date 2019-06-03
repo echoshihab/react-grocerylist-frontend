@@ -78,15 +78,17 @@ export const addItem = (item, quantity) => (dispatch, getState) => {
 };
 
 export const toggleComplete = (id, completed) => (dispatch, getState) => {
+  console.log(completed);
   axios
-    .put(
+    .patch(
       `http://localhost:8000/api/${id}/`,
       {
-        completed: true
+        completed
       },
       tokenConfig(getState)
     )
     .then(res => {
+      console.log(res);
       dispatch({
         type: TOGGLE_ITEM,
         payload: res.data

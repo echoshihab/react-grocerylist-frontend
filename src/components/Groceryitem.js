@@ -3,7 +3,7 @@ import React, { Component } from "react";
 export class Groceryitem extends Component {
   state = {
     editGroceryItem: false,
-    completed: false,
+    checked: false,
     groceryItem: "",
     quantity: ""
   };
@@ -11,7 +11,12 @@ export class Groceryitem extends Component {
   addStyle = () => {
     return {
       border: "solid 1px",
-      padding: "10px",
+      padding: "10px"
+    };
+  };
+
+  toggleStyle = () => {
+    return {
       textDecoration: this.props.grocery.completed ? "line-through" : "none"
     };
   };
@@ -26,9 +31,9 @@ export class Groceryitem extends Component {
 
   markCompleted = () => {
     this.setState({
-      completed: !this.state.completed
+      checked: !this.state.checked
     });
-    this.props.toggleComplete(this.props.grocery.id, this.state.completed);
+    this.props.toggleComplete(this.props.grocery.id, !this.state.checked);
   };
 
   saveGrocery = () => {
@@ -49,15 +54,16 @@ export class Groceryitem extends Component {
   render() {
     return !this.state.editGroceryItem ? (
       <div style={this.addStyle()}>
-        <span>{this.props.grocery.item}</span>
-        <span style={padLeftStyle}>{this.props.grocery.quantity}</span>
-        <span style={padLeftStyle}>
+        <span style={this.toggleStyle()}>
+          <span>{this.props.grocery.item}</span>
+          <span style={padLeftStyle}>{this.props.grocery.quantity}</span>
+          <span style={padLeftStyle} />
           <button
             name="check"
             className="btn btn-success btn-sm"
             onClick={this.markCompleted}
           >
-            Check
+            {this.state.checked ? "Uncheck" : "Check"}
           </button>
 
           <button
@@ -94,13 +100,6 @@ export class Groceryitem extends Component {
           onChange={this.onChange}
         />
         <span style={padLeftStyle}>
-          <button
-            name="check"
-            className="btn btn-success btn-sm"
-            onClick={this.markCompleted}
-          >
-            Check
-          </button>
           <button
             type="button"
             className="btn btn-danger btn-sm"
