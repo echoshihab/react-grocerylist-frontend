@@ -6,6 +6,7 @@ import Login from "./User/Login";
 import Register from "./User/Register";
 import GroceryApp from "./components/GroceryApp";
 import Mainbar from "./components/layout/Mainbar";
+import Errors from "./components/layout/Errors";
 import UserRoute from "./User/UserRoute";
 import store from "./store";
 import { loadUser } from "./actions/auth";
@@ -21,6 +22,7 @@ class App extends Component {
         <Router>
           <Fragment>
             <Mainbar />
+            <Errors />
             <div className="container">
               <Switch>
                 <UserRoute exact path="/" component={GroceryApp} />
