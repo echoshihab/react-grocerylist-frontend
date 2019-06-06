@@ -1,5 +1,5 @@
 import axios from "axios";
-import { returnErrors } from "./messages";
+import { createMessage, returnErrors } from "./messages";
 import { tokenConfig } from "./auth";
 
 import {
@@ -29,12 +29,15 @@ export const deleteItem = id => (dispatch, getState) => {
   axios
     .delete(`http://localhost:8000/api/${id}`, tokenConfig(getState))
     .then(res => {
+      dispatch(createMessage({ deleteItem: "Item Deleted" }));
       dispatch({
         type: DELETE_ITEM,
         payload: id
       });
     })
-    .catch(err => console.log(err));
+    .catch(err =>
+      dispatch(returnErrors(err.response.data, err.response.status))
+    );
 };
 
 export const updateItem = (id, item, quantity) => (dispatch, getState) => {
@@ -48,13 +51,15 @@ export const updateItem = (id, item, quantity) => (dispatch, getState) => {
       tokenConfig(getState)
     )
     .then(res => {
-      console.log(res);
+      dispatch(createMessage({ updateItem: "Item Updated" }));
       dispatch({
         type: UPDATE_ITEM,
         payload: res.data
       });
     })
-    .catch(err => console.log(err));
+    .catch(err =>
+      dispatch(returnErrors(err.response.data, err.response.status))
+    );
 };
 
 export const addItem = (item, quantity) => (dispatch, getState) => {
@@ -65,20 +70,18 @@ export const addItem = (item, quantity) => (dispatch, getState) => {
       tokenConfig(getState)
     )
     .then(res => {
-      console.log(res);
+      dispatch(createMessage({ addItem: "Item Added" }));
       dispatch({
         type: ADD_ITEM,
         payload: res.data
       });
     })
     .catch(err => {
-      console.log(err);
       dispatch(returnErrors(err.response.data, err.response.status));
     });
 };
 
 export const toggleComplete = (id, completed) => (dispatch, getState) => {
-  console.log(completed);
   axios
     .patch(
       `http://localhost:8000/api/${id}/`,
@@ -88,7 +91,6 @@ export const toggleComplete = (id, completed) => (dispatch, getState) => {
       tokenConfig(getState)
     )
     .then(res => {
-      console.log(res);
       dispatch({
         type: TOGGLE_ITEM,
         payload: res.data
